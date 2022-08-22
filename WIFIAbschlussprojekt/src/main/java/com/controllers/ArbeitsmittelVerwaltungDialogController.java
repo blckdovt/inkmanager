@@ -86,6 +86,7 @@ public class ArbeitsmittelVerwaltungDialogController {
 			abm.setArbeitsmittelName(arbeitsmittelText.getText());
 			abm.setHersteller(herstellerText.getText());
 			abm.setAblaufdatum(expdate);
+			this.arbeitsmittel = abm;
 			
 			session.save(abm);
 			

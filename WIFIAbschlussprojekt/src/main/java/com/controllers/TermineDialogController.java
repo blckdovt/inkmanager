@@ -181,6 +181,7 @@ public class TermineDialogController implements Initializable{
 			termin.setDatum(terminDatum);
 			termin.setUhrzeit(uhrzeit);
 			termin.setKunde(kunde);
+			this.termin = termin;
 
 			kunde.getTerminliste().add(termin);
 			benutzer.getTerminliste().add(termin);
