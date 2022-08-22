@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="655.0" prefWidth="1005.0" style="-fx-background-color: #424242;" stylesheets="@buttonstyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controllers.UserverwaltungController">
+   <left>
+      <AnchorPane prefHeight="655.0" prefWidth="447.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="340.0" fitWidth="320.0" layoutX="101.0" layoutY="168.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@tattoo-artist.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane prefHeight="655.0" prefWidth="580.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="134.0" layoutY="124.0" prefHeight="30.0" prefWidth="131.0" style="-fx-font-weight: bold;" text="Username*" textFill="#fdc029">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="usernameTF" layoutX="134.0" layoutY="154.0" prefHeight="25.0" prefWidth="290.0" promptText="Username" />
+            <PasswordField fx:id="passwordfield" layoutX="134.0" layoutY="253.0" prefHeight="25.0" prefWidth="290.0" promptText="Passwort" />
+            <Button fx:id="userSpeichern" alignment="CENTER" layoutX="136.0" layoutY="483.0" mnemonicParsing="false" onAction="#userSpeichern" prefHeight="39.0" prefWidth="128.0" text="Speichern">
+               <font>
+                  <Font size="16.0" />
+               </font></Button>
+            <Label layoutX="134.0" layoutY="223.0" prefHeight="30.0" prefWidth="131.0" style="-fx-font-weight: bold;" text="Passwort*" textFill="#fdc029">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Button fx:id="abbrechen" alignment="CENTER" layoutX="286.0" layoutY="483.0" mnemonicParsing="false" onAction="#abbrechen" prefHeight="39.0" prefWidth="138.0" text="Abbrechen">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Label layoutX="134.0" layoutY="328.0" prefHeight="30.0" prefWidth="289.0" style="-fx-font-weight: bold;" text="Passwort bestätigen*" textFill="#fdc029">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="passwordfield1" layoutX="134.0" layoutY="358.0" prefHeight="25.0" prefWidth="290.0" promptText="Passwort" />
+            <Button fx:id="userLoeschen" alignment="CENTER" layoutX="215.0" layoutY="554.0" mnemonicParsing="false" onAction="#userLoeschen" prefHeight="39.0" prefWidth="128.0" text="Löschen">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Label fx:id="adminLabel" layoutX="134.0" layoutY="417.0" prefHeight="30.0" prefWidth="131.0" style="-fx-font-weight: bold;" text="Admin" textFill="#fdc029">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <CheckBox fx:id="adminCheckBox" layoutX="221.0" layoutY="424.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="18.0" stylesheets="@buttonstyle.css" />
+            <Label fx:id="errorLabel" layoutX="131.0" layoutY="447.0" prefHeight="20.0" prefWidth="292.0" text="  " textFill="#aa3d01">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>

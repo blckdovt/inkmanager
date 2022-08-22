@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="344.0" prefWidth="600.0" style="-fx-background-color: #424242;" stylesheets="@buttonstyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controllers.TermineDialogController">
+   <children>
+      <Button fx:id="speichernTermin" alignment="CENTER" layoutX="248.0" layoutY="274.0" mnemonicParsing="false" onAction="#speichern" prefHeight="30.0" prefWidth="110.0" text="Speichern" />
+      <Label fx:id="datumLabel" layoutX="95.0" layoutY="55.0" style="-fx-font-weight: bold;" text="Datum" textFill="#fdc029">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="uhrzeitLabel" layoutX="96.0" layoutY="129.0" style="-fx-font-weight: bold;" text="Uhrzeit" textFill="#fdc029">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="kundenIdLabel" layoutX="96.0" layoutY="206.0" style="-fx-font-weight: bold;" text="Kunde" textFill="#fdc029">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="uhrzeitStunden" alignment="CENTER" layoutX="248.0" layoutY="126.0" prefHeight="25.0" prefWidth="40.0" promptText="HH" />
+      <DatePicker fx:id="datum" layoutX="247.0" layoutY="52.0" onAction="#termindatumEintragen" prefHeight="25.0" prefWidth="290.0" promptText="Datum" />
+      <ChoiceBox fx:id="kundeAuswahl" layoutX="248.0" layoutY="203.0" prefHeight="25.0" prefWidth="290.0" stylesheets="@buttonstyle.css" />
+      <TextField fx:id="uhrzeitMinuten" alignment="CENTER" layoutX="311.0" layoutY="126.0" prefHeight="25.0" prefWidth="40.0" promptText="MM" />
+      <Label fx:id="doppelpunkt" layoutX="297.0" layoutY="128.0" style="-fx-font-weight: bold;" text=":" textFill="#fdc029">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="errMsg" layoutX="247.0" layoutY="242.0" prefHeight="20.0" prefWidth="347.0" textFill="#aa3d01" />
+   </children>
+</Pane>

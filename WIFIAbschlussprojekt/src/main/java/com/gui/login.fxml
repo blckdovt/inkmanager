@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="655.0" prefWidth="1005.0" style="-fx-background-color: #424242;" stylesheets="@buttonstyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controllers.LoginController">
+   <left>
+      <AnchorPane prefHeight="655.0" prefWidth="503.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="325.0" fitWidth="322.0" layoutX="117.0" layoutY="167.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@suitcase.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane prefHeight="655.0" prefWidth="518.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="106.0" layoutY="206.0" prefHeight="30.0" prefWidth="131.0" style="-fx-font-weight: bold;" text="Username" textFill="#fdc029">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="usernameTF" layoutX="106.0" layoutY="236.0" prefHeight="25.0" prefWidth="290.0" promptText="Username" />
+            <PasswordField fx:id="passwortTF" layoutX="106.0" layoutY="341.0" prefHeight="25.0" prefWidth="290.0" promptText="Passwort" />
+            <Button fx:id="loginButton" alignment="CENTER" layoutX="108.0" layoutY="437.0" mnemonicParsing="false" onAction="#userLogIn" prefHeight="39.0" prefWidth="128.0" stylesheets="@buttonstyle.css" text="Log In">
+               <font>
+                  <Font size="16.0" />
+               </font></Button>
+            <Label fx:id="errorMsg" layoutX="106.0" layoutY="393.0" prefHeight="20.0" prefWidth="385.0" textFill="#aa3d01">
+               <font>
+                  <Font size="16.0" />
+               </font></Label>
+            <Label layoutX="106.0" layoutY="313.0" prefHeight="30.0" prefWidth="131.0" style="-fx-font-weight: bold;" text="Passwort" textFill="#fdc029">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Button fx:id="userverwaltung" alignment="CENTER" layoutX="268.0" layoutY="437.0" mnemonicParsing="false" onAction="#userverwaltung" prefHeight="39.0" prefWidth="128.0" stylesheets="@buttonstyle.css" text="Settings">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>

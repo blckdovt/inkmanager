@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="655.0" prefWidth="1005.0" style="-fx-background-color: #424242;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controllers.MotiveController">
+   <children>
+      <VBox fx:id="vbButtons" prefHeight="655.0" prefWidth="400.0" spacing="35.0" style="-fx-background-color: #424242;">
+         <children>
+            <Button fx:id="kundenstamm" alignment="BASELINE_LEFT" graphicTextGap="20.0" mnemonicParsing="false" onAction="#goToKundenstamm" prefHeight="70.0" prefWidth="380.0" stylesheets="@buttonstyle.css" text="Kundenstamm">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="100.0" />
+               </padding>
+               <graphic>
+                  <FontAwesomeIconView glyphName="USER" />
+               </graphic></Button>
+            <Button fx:id="arbeitsmittel" alignment="BASELINE_LEFT" graphicTextGap="20.0" mnemonicParsing="false" onAction="#goToArbeitsmittel" prefHeight="70.0" prefWidth="380.0" stylesheets="@buttonstyle.css" text="Arbeitsmittel">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="100.0" />
+               </padding>
+               <graphic>
+                  <FontAwesomeIconView glyphName="CUBES" />
+               </graphic></Button>
+            <Button fx:id="motive" alignment="BASELINE_LEFT" graphicTextGap="20.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="380.0" stylesheets="@buttonstyle.css" text="Motive">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="100.0" />
+               </padding>
+               <graphic>
+                  <FontAwesomeIconView glyphName="IMAGE" />
+               </graphic></Button>
+            <Button fx:id="termine" alignment="BASELINE_LEFT" graphicTextGap="20.0" mnemonicParsing="false" onAction="#goToTermine" prefHeight="70.0" prefWidth="380.0" stylesheets="@buttonstyle.css" text="Termine">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="100.0" />
+               </padding>
+               <graphic>
+                  <FontAwesomeIconView glyphName="CALENDAR" />
+               </graphic></Button>
+            <Button fx:id="logoutButton" alignment="BASELINE_LEFT" graphicTextGap="20.0" mnemonicParsing="false" onAction="#userLogOut" prefHeight="70.0" prefWidth="380.0" stylesheets="@buttonstyle.css" text="Log Out">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="100.0" />
+               </padding>
+               <graphic>
+                  <FontAwesomeIconView glyphName="POWER_OFF" />
+               </graphic>
+            </Button>
+         </children>
+         <padding>
+            <Insets left="20.0" right="10.0" top="90.0" />
+         </padding>
+      </VBox>
+      <VBox layoutX="400.0" prefHeight="655.0" prefWidth="605.0" style="-fx-background-color: #424242;">
+         <padding>
+            <Insets right="10.0" top="50.0" />
+         </padding>
+         <children>
+            <Pane prefHeight="574.0" prefWidth="595.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <children>
+                  <Pane layoutY="-8.0" prefHeight="480.0" prefWidth="595.0">
+                     <children>
+                        <Button fx:id="moveLeftButton" alignment="CENTER" layoutX="35.0" layoutY="224.0" mnemonicParsing="false" onAction="#goLeft" prefHeight="35.0" prefWidth="35.0" stylesheets="@buttonstyle.css">
+                           <graphic>
+                              <FontAwesomeIconView glyphName="ARROW_LEFT" textAlignment="CENTER" wrappingWidth="21.0">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </FontAwesomeIconView>
+                           </graphic></Button>
+                        <Button fx:id="moveRightButton" alignment="CENTER" layoutX="525.0" layoutY="224.0" mnemonicParsing="false" onAction="#goRight" prefHeight="35.0" prefWidth="35.0" stylesheets="@buttonstyle.css">
+                           <graphic>
+                              <FontAwesomeIconView glyphName="ARROW_RIGHT" textAlignment="CENTER" wrappingWidth="21.0" />
+                           </graphic></Button>
+                        <Label fx:id="imageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="139.0" layoutY="98.0" prefHeight="320.0" prefWidth="320.0" />
+                        <Label fx:id="bildNameLabel" alignment="CENTER" layoutY="14.0" prefHeight="30.0" prefWidth="595.0" style="-fx-font-weight: bold;" text="BILDNAME" textFill="WHITE">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="imageView" fitHeight="256.0" fitWidth="250.0" layoutX="173.0" layoutY="131.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Pane>
+                  <Button fx:id="loeschenKunde" alignment="CENTER" layoutX="260.0" layoutY="528.0" mnemonicParsing="false" onAction="#kundeLoeschen" prefHeight="30.0" prefWidth="280.0" stylesheets="@buttonstyle.css" text="Kunde von Motiv löschen" />
+                  <Button fx:id="motivliste" alignment="CENTER" layoutX="78.0" layoutY="467.0" mnemonicParsing="false" onAction="#motivlisteAnzeigen" prefHeight="30.0" prefWidth="150.0" stylesheets="@buttonstyle.css" text="Motivliste" />
+                  <ChoiceBox fx:id="kundenAuswahl" layoutX="260.0" layoutY="467.0" prefHeight="30.0" prefWidth="280.0" stylesheets="@buttonstyle.css" />
+                  <Button fx:id="speichernButton" alignment="CENTER" layoutX="78.0" layoutY="528.0" mnemonicParsing="false" onAction="#kundeSpeichern" prefHeight="30.0" prefWidth="150.0" stylesheets="@buttonstyle.css" text="Speichern" />
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

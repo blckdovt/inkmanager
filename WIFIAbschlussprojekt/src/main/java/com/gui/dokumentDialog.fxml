@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="181.0" prefWidth="468.0" style="-fx-background-color: #424242;" stylesheets="@buttonstyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controllers.DokumentDialogController">
+   <children>
+      <Button fx:id="browseDokumente" alignment="CENTER" layoutX="334.0" layoutY="28.0" mnemonicParsing="false" onAction="#browseDokumente" prefHeight="30.0" prefWidth="110.0" text="Browse" />
+      <TextField fx:id="pfadText" layoutX="25.0" layoutY="30.0" prefHeight="25.0" prefWidth="290.0" />
+      <TextField fx:id="nameText" layoutX="25.0" layoutY="101.0" prefHeight="25.0" prefWidth="290.0" />
+      <Label fx:id="nameLabel" layoutX="25.0" layoutY="77.0" text="Name des Dokuments" textFill="#fdc029">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="speichernButton" alignment="CENTER" layoutX="334.0" layoutY="99.0" mnemonicParsing="false" onAction="#speicherDokumente" prefHeight="30.0" prefWidth="110.0" text="Speichern" />
+      <Label fx:id="errMsg" layoutX="25.0" layoutY="143.0" textFill="#fdc029">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

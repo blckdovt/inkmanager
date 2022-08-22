@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="175.0" prefWidth="468.0" style="-fx-background-color: #424242;" stylesheets="@buttonstyle.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controllers.MotiveDialogController">
+   <children>
+      <Button fx:id="browseMotive" alignment="CENTER" layoutX="337.0" layoutY="56.0" mnemonicParsing="false" onAction="#browseMotive" prefHeight="25.0" prefWidth="110.0" text="Browse" />
+      <TextField fx:id="pfadText" layoutX="21.0" layoutY="56.0" prefHeight="25.0" prefWidth="290.0" />
+      <TextField fx:id="nameText" layoutX="21.0" layoutY="126.0" prefHeight="25.0" prefWidth="290.0" />
+      <Label fx:id="nameLabel" layoutX="21.0" layoutY="105.0" text="Name des Motivs" textFill="#fdc029" />
+      <Label fx:id="errMsg" layoutX="21.0" layoutY="20.0" prefHeight="20.0" prefWidth="416.0" textFill="#aa3d01" />
+      <Button fx:id="speichernButton" alignment="CENTER" layoutX="337.0" layoutY="126.0" mnemonicParsing="false" onAction="#speicherMotiv" prefHeight="25.0" prefWidth="110.0" text="Speichern" />
+   </children>
+</Pane>
