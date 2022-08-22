@@ -79,14 +79,11 @@ public class ArbeitsmittelVerwaltungController implements Initializable{
 		listeBefuellen();
 	}
 
+	// Methode, um Table nach Veränderungen zu aktualisieren
     private void listeBefuellen() {
     	arbeitsmittelVerwaltungList.clear();
 		
-		Configuration config = new Configuration().configure().addAnnotatedClass(Arbeitsmittel.class).addAnnotatedClass(Benutzer.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+    	Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 		
@@ -143,11 +140,7 @@ public class ArbeitsmittelVerwaltungController implements Initializable{
 
     @FXML
     void loeschenArbeitsmittel(ActionEvent event) {
-    	Configuration config = new Configuration().configure().addAnnotatedClass(Arbeitsmittel.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+    	Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 		

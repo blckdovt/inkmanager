@@ -59,11 +59,7 @@ public class UserverwaltungController {
 	void userLoeschen(ActionEvent event) {
 		// Datenbank - User holen/abfragen
 
-		Configuration config = new Configuration().configure().addAnnotatedClass(Benutzer.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+		Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();	
 
@@ -106,11 +102,7 @@ public class UserverwaltungController {
 			return;
 		}
 
-		Configuration config = new Configuration().configure().addAnnotatedClass(Benutzer.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+		Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 

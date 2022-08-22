@@ -73,11 +73,7 @@ public class WarenlisteController implements Initializable{
 	public void listeBefuellen() {
 		warenlisteList.clear();
 
-		Configuration config = new Configuration().configure().addAnnotatedClass(Arbeitsmittel.class).addAnnotatedClass(Benutzer.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+		Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 
@@ -95,11 +91,7 @@ public class WarenlisteController implements Initializable{
 
 	@FXML
 	void stornieren(ActionEvent event) {
-		Configuration config = new Configuration().configure().addAnnotatedClass(Arbeitsmittel.class).addAnnotatedClass(Benutzer.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+		Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 

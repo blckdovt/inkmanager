@@ -94,14 +94,11 @@ public class KundenstammController implements Initializable{
 		listeBefuellen();
 	}
 
+	// Methode, um Table nach Veränderungen zu aktualisieren
 	public void listeBefuellen() {
 		list.clear();
-
-		Configuration config = new Configuration().configure().addAnnotatedClass(Benutzer.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+		
+		Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 
@@ -138,6 +135,8 @@ public class KundenstammController implements Initializable{
 		Stage stage = new Stage();
 		Scene scene = new Scene(root);
 
+		// Bevor Stage geladen wird, wird hier der Controller des FXMLs geladen, um die
+		// TextFields, etc. vorab auszufüllen
 		KundenstammDialogController kundenstammcontroller = fxmlloader.getController();
 		kundenstammcontroller.setKunde(kundentabelle.getSelectionModel().getSelectedItem());
 
@@ -149,11 +148,9 @@ public class KundenstammController implements Initializable{
 		kundenstammcontroller.getDokumentLoeschen().setDisable(false);
 		kundenstammcontroller.getHinzufuegenButton().setDisable(false);
 
-		Configuration config = new Configuration().configure().addAnnotatedClass(Kunde.class).addAnnotatedClass(Dokument.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+		// Hier werden die Dokumente, die zu einem Kunden geschlüsselt wurden, geladen und die Liste
+		// im DialogController befüllt
+		Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 
@@ -165,6 +162,7 @@ public class KundenstammController implements Initializable{
 		txn.commit();
 		session.close();
 		
+		// erst dann wird Stage geladen
 		stage.setScene(scene);
 		stage.setTitle("InkManager");
 		stage.setResizable(false);
@@ -174,11 +172,7 @@ public class KundenstammController implements Initializable{
 
 	@FXML
 	void loescheKunde(ActionEvent event) {		
-		Configuration config = new Configuration().configure().addAnnotatedClass(Kunde.class).addAnnotatedClass(Benutzer.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+		Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 

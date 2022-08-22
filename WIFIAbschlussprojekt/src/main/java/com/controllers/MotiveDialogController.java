@@ -41,13 +41,13 @@ public class MotiveDialogController {
     @FXML
     void browseMotive(ActionEvent event) {
     	FileChooser fc = new FileChooser();
-    	File file = fc.showOpenDialog(LogIn.getStg());
     	
-    	if(file.getPath().toString().endsWith(".jpg") ||
-    		file.getPath().toString().endsWith(".jpeg") ||
-    		file.getPath().toString().endsWith(".png") ||
-    		file.getPath().toString().endsWith(".gif"))
-    	{
+    	// festlegen, dass nur gewisse Dateien (Bilder) ausgewählt werden
+    	fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image files ", "*.png ", "*.jpg", "*.jpeg", "*.gif"));
+    	File file = fc.showOpenDialog(null);
+    	
+    	// falls falsches File ausgewählt wurde wird error ausgegeben
+    	if(file != null) {
     		pfadText.setText(file.getPath().toString());
 		}
     	else {
@@ -57,6 +57,8 @@ public class MotiveDialogController {
     
     @FXML
     void speicherMotiv(ActionEvent event) {
+    	
+    	// Abfrage des Formulars (Richtigkeit & Vollständigkeit)
     	if(nameText.getText().isEmpty() && pfadText.getText().isEmpty()) {
     		errMsg.setText("Bitte Name und Dateipfad angeben.");
     		return;
@@ -70,17 +72,14 @@ public class MotiveDialogController {
     		return;
     	}
     	
-    	Configuration config = new Configuration().configure().addAnnotatedClass(Motiv.class).addAnnotatedClass(Benutzer.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+    	Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 
 		Motiv motiv = new Motiv();
 		motiv.setName(nameText.getText());
 		motiv.setPfad(pfadText.getText());
+		
 		Benutzer benutzer = session.get(Benutzer.class, LoginController.angemeldeterBenutzer.getBenutzerId());
 		benutzer.getMotivliste().add(motiv);
 
@@ -89,6 +88,8 @@ public class MotiveDialogController {
 		txn.commit();
 		session.close();
     }
+    
+    // GETTERS & SETTERS ////////////////////////////////////////////////////////////////////
 
 	public Button getBrowseMotive() {
 		return browseMotive;

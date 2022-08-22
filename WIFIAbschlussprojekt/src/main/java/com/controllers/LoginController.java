@@ -36,12 +36,24 @@ public class LoginController {
 
 	@FXML
 	private Button userverwaltung;
-	
+
 	public static Benutzer angemeldeterBenutzer;
+	
+	private static Configuration config;
+	
+	private static SessionFactory sf;
+	
+	// statischer Initialisierer um nur einmal die Configuration aufzurufen und die SessionFactory
+	// zu bilden
+	static {
+		config = new Configuration().configure().addAnnotatedClass(Benutzer.class);
+		sf = config.buildSessionFactory();
+	}
 
 	@FXML
 	void userLogIn(ActionEvent event) throws IOException {
 
+		// Abfrage des Formulars (Richtigkeit & Vollständigkeit)
 		if(usernameTF.getText().isEmpty() && passwortTF.getText().isEmpty()) {
 			errorMsg.setText("Bitte LogIn-Daten eingeben.");
 			return;
@@ -59,10 +71,6 @@ public class LoginController {
 
 		// Datenbank - User holen/abfragen
 
-		Configuration config = new Configuration().configure().addAnnotatedClass(Benutzer.class).addAnnotatedClass(Kunde.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
 		Session session = sf.openSession();
 
 		Transaction txn = session.beginTransaction();	
@@ -71,6 +79,9 @@ public class LoginController {
 
 		List<Benutzer> benutzerliste = query.list();
 		
+		// Wenn kein Benutzer vorhanden ist (z.B. nach Neuinstallation), dann wird ein Admin erstellt
+		// Username: admin
+		// Passwort: admin
 		if(benutzerliste.isEmpty()) {
 			Benutzer benutzer = new Benutzer();
 			benutzer.setAdmin(true);
@@ -81,7 +92,8 @@ public class LoginController {
 			
 			session.save(benutzer);
 		}
-
+		
+		// alle Benutzer durchgehen
 		for(Benutzer b : benutzerliste) {
 
 			if(b.getUsername().equals(usernameTF.getText())) {
@@ -119,7 +131,8 @@ public class LoginController {
 
 	@FXML
 	void userverwaltung(ActionEvent event) throws IOException {
-
+		 
+		// Abfrage des Formulars (Richtigkeit & Vollständigkeit)
 		if(usernameTF.getText().isEmpty() && passwortTF.getText().isEmpty()) {
 			errorMsg.setText("Bitte Admin LogIn-Daten eingeben.");
 			return;
@@ -137,10 +150,6 @@ public class LoginController {
 
 		// Datenbank - User holen/abfragen
 
-		Configuration config = new Configuration().configure().addAnnotatedClass(Benutzer.class).addAnnotatedClass(Kunde.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
 		Session session = sf.openSession();
 
 		Transaction txn = session.beginTransaction();	
@@ -151,6 +160,7 @@ public class LoginController {
 
 		for(Benutzer b : benutzer) {
 
+			//hier wird zuzüglich Abgefragt ob Benutzer ein Adminrechte hat
 			if(b.isAdmin() && b.getUsername().equals(usernameTF.getText())) {
 
 				// Passwortabfrage -> wenn Username gefunden
@@ -180,7 +190,70 @@ public class LoginController {
 
 		txn.commit();
 		session.close();
-
 	}
 
+	public Label getErrorMsg() {
+		return errorMsg;
+	}
+
+	public void setErrorMsg(Label errorMsg) {
+		this.errorMsg = errorMsg;
+	}
+
+	public Button getLoginButton() {
+		return loginButton;
+	}
+
+	public void setLoginButton(Button loginButton) {
+		this.loginButton = loginButton;
+	}
+
+	public PasswordField getPasswortTF() {
+		return passwortTF;
+	}
+
+	public void setPasswortTF(PasswordField passwortTF) {
+		this.passwortTF = passwortTF;
+	}
+
+	public TextField getUsernameTF() {
+		return usernameTF;
+	}
+
+	public void setUsernameTF(TextField usernameTF) {
+		this.usernameTF = usernameTF;
+	}
+
+	public Button getUserverwaltung() {
+		return userverwaltung;
+	}
+
+	public void setUserverwaltung(Button userverwaltung) {
+		this.userverwaltung = userverwaltung;
+	}
+
+	public static Benutzer getAngemeldeterBenutzer() {
+		return angemeldeterBenutzer;
+	}
+
+	public static void setAngemeldeterBenutzer(Benutzer angemeldeterBenutzer) {
+		LoginController.angemeldeterBenutzer = angemeldeterBenutzer;
+	}
+
+	public static Configuration getConfig() {
+		return config;
+	}
+
+	public static void setConfig(Configuration config) {
+		LoginController.config = config;
+	}
+
+	public static SessionFactory getSf() {
+		return sf;
+	}
+
+	public static void setSf(SessionFactory sf) {
+		LoginController.sf = sf;
+	}
+	
 }

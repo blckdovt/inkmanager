@@ -105,11 +105,7 @@ public class TermineController implements Initializable{
 	public void listeBefuellen() {
 		list.clear();
 
-		Configuration config = new Configuration().configure().addAnnotatedClass(Termin.class).addAnnotatedClass(Kunde.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+		Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 
@@ -145,6 +141,8 @@ public class TermineController implements Initializable{
 		Stage stage = new Stage();
 		Scene scene = new Scene(root);
 		
+		// Bevor Stage geladen wird, wird hier der Controller des FXMLs geladen, um die
+		// TextFields, etc. vorab auszufüllen
 		TermineDialogController terminecontroller = fxmlloader.getController();
 		terminecontroller.setTermin(termintabelle.getSelectionModel().getSelectedItem());
 		terminecontroller.getDatum().setValue(termintabelle.getSelectionModel().getSelectedItem().getDatum());
@@ -157,6 +155,7 @@ public class TermineController implements Initializable{
 		String kundenname = "(" + termintabelle.getSelectionModel().getSelectedItem().getKundeId() + ") " + termintabelle.getSelectionModel().getSelectedItem().getKundeNachname() + ", " + termintabelle.getSelectionModel().getSelectedItem().getKundeVorname();
 		terminecontroller.getKundeAuswahl().setValue(kundenname);
 		
+		// erst dann wird Stage geladen
 		stage.setScene(scene);
 		stage.setTitle("InkManager");
 		stage.setResizable(false);
@@ -180,11 +179,7 @@ public class TermineController implements Initializable{
 
 	@FXML
 	void terminLoeschen(ActionEvent event) {
-		Configuration config = new Configuration().configure().addAnnotatedClass(Termin.class).addAnnotatedClass(Benutzer.class).addAnnotatedClass(Kunde.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+		Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 		

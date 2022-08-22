@@ -90,10 +90,13 @@ public class ArbeitsmittelController implements Initializable{
     
 	
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		// Abfrage ob User ein Admin ist und Berechtigung zum ändern der allgemeinen Warenliste hat
 		if(!LoginController.angemeldeterBenutzer.isAdmin()) {
 			verwaltungButton.setDisable(true);
 		}
 		
+		// TableView aufbauen
 		arbeitsmittelList = FXCollections.observableArrayList();
 		
     	idCol.setCellValueFactory(new PropertyValueFactory<Arbeitsmittel, Integer>("arbeitsmittelId"));
@@ -105,14 +108,11 @@ public class ArbeitsmittelController implements Initializable{
 		listeBefuellen();
 	}
     
+	// Methode, um Table nach Veränderungen zu aktualisieren
     public void listeBefuellen(){
     	arbeitsmittelList.clear();
 		
-		Configuration config = new Configuration().configure().addAnnotatedClass(Arbeitsmittel.class).addAnnotatedClass(Benutzer.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+    	Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 		
@@ -130,11 +130,7 @@ public class ArbeitsmittelController implements Initializable{
     
     @FXML
     void arbeitsmittelReservieren(ActionEvent event) {
-    	Configuration config = new Configuration().configure().addAnnotatedClass(Arbeitsmittel.class).addAnnotatedClass(Benutzer.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+    	Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 		

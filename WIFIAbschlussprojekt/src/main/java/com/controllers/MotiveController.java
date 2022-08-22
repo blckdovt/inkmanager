@@ -103,15 +103,12 @@ public class MotiveController implements Initializable{
 		
 		bildLaden();
 	}
-	
+
+	// Bilder für Anzeige laden
 	public void bilderlisteLaden() {
 		motiveAL.clear();
 		
-		Configuration config = new Configuration().configure().addAnnotatedClass(Motiv.class).addAnnotatedClass(Benutzer.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+		Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 
@@ -131,11 +128,7 @@ public class MotiveController implements Initializable{
 		kundenAuswahl.setValue(null);
 
 		if(kundenliste == null) {
-			Configuration config = new Configuration().configure().addAnnotatedClass(Benutzer.class);
-
-			SessionFactory sf = config.buildSessionFactory();
-
-			Session session = sf.openSession();
+			Session session = LoginController.getSf().openSession();
 
 			Transaction txn = session.beginTransaction();
 
@@ -156,6 +149,8 @@ public class MotiveController implements Initializable{
 		}
 	}
 
+	// Methode um die Bilderliste durchzugehen
+	// Bild wird angezeigt - mit Button Links und Rechts kann durchgeblätter werden
 	public void bildLaden() {
 		moveLeftButton.setDisable(true);
 		moveRightButton.setDisable(true);
@@ -166,9 +161,6 @@ public class MotiveController implements Initializable{
 		if(motiveAL.isEmpty()) {
 			return;
 		}
-//		if(motiveAL.size() == 1) {
-//			return;
-//		}
 		if(index > 0) {
 			moveLeftButton.setDisable(false);
 		}
@@ -190,14 +182,6 @@ public class MotiveController implements Initializable{
 		}
 	}
 	
-	public void checkKundeMotiv() {		
-		if(motiveAL.get(index).getKunde() != null) {
-			String kundenname = "(" + motiveAL.get(index).getKunde().getKundeId() + ") " + motiveAL.get(index).getKunde().getKundeNachname() + ", " + motiveAL.get(index).getKunde().getKundeVorname();
-			kundenAuswahl.setValue(kundenname);
-			kundenAuswahl.setDisable(true);
-		}
-	}
-	
 	@FXML
 	void goLeft(ActionEvent event) {
 		index--;
@@ -211,6 +195,16 @@ public class MotiveController implements Initializable{
 		choiceBoxLaden();
 		bildLaden();
 	}
+	
+	// hier wird abgefragt ob Kunde zu Motiv geschlüsselt wurde
+	// wenn ja dann wird CheckBox disabled
+	public void checkKundeMotiv() {		
+		if(motiveAL.get(index).getKunde() != null) {
+			String kundenname = "(" + motiveAL.get(index).getKunde().getKundeId() + ") " + motiveAL.get(index).getKunde().getKundeNachname() + ", " + motiveAL.get(index).getKunde().getKundeVorname();
+			kundenAuswahl.setValue(kundenname);
+			kundenAuswahl.setDisable(true);
+		}
+	}
 
 	@FXML
 	void motivlisteAnzeigen(ActionEvent event) throws IOException {
@@ -218,12 +212,11 @@ public class MotiveController implements Initializable{
 
 		Stage stage = new Stage();
 		Scene scene = new Scene(root);
-
+		
 		stage.setScene(scene);
 		stage.setTitle("InkManager");
 		stage.setResizable(false);
-		stage.setOnCloseRequest(e -> {
-			
+		stage.setOnCloseRequest(e -> {	
 			choiceBoxLaden();
 			bilderlisteLaden();
 			bildLaden();
@@ -233,15 +226,12 @@ public class MotiveController implements Initializable{
 
 	@FXML
 	void kundeSpeichern(ActionEvent event) {
-		Configuration config = new Configuration().configure().addAnnotatedClass(Motiv.class).addAnnotatedClass(Kunde.class).addAnnotatedClass(Benutzer.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+		Session session = LoginController.getSf().openSession();
 		session.clear();
 
 		Transaction txn = session.beginTransaction();
-
+		
+		// Hier muss mittels des Strings die ID gefunden werden, um den Kunden zu laden
 		StringBuilder kundeIdSB = new StringBuilder();
 		String kundenname = kundenAuswahl.getSelectionModel().getSelectedItem();
 		for(int i = 0; i < kundenname.length(); i++) {
@@ -266,14 +256,11 @@ public class MotiveController implements Initializable{
 
 	@FXML
 	void kundeLoeschen(ActionEvent event) {
-		Configuration config = new Configuration().configure().addAnnotatedClass(Motiv.class).addAnnotatedClass(Kunde.class).addAnnotatedClass(Benutzer.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+		Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 		
+		// Hier muss mittels des Strings die ID gefunden werden, um den Kunden zu laden
 		StringBuilder kundeIdSB = new StringBuilder();
 		String kundenname = kundenAuswahl.getSelectionModel().getSelectedItem();
 		for(int i = 0; i < kundenname.length(); i++) {

@@ -12,8 +12,11 @@ public class LogIn extends Application {
 
 	private static Stage stg;
 	
+	// Start des Programms
+	
 	@Override
 	public void start(Stage primaryStage) throws IOException {			
+		
 		stg = primaryStage;
 
 		Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));

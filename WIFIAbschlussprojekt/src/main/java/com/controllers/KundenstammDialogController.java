@@ -97,6 +97,8 @@ public class KundenstammDialogController implements Initializable{
 		dokumenteCol.setCellValueFactory(new PropertyValueFactory<Dokument, String>("name"));
 		pfadCol.setCellValueFactory(new PropertyValueFactory<Dokument, String>("pfad"));
 
+		// Wenn Kunde noch nicht abgespeichert ist, dann kann kein Dokument hinzugefügt werden
+		// --> foreign Key noch nicht vorhanden ==> darum werden Buttons disabled
 		if(kunde == null) {
 			hinzufuegenButton.setDisable(true);
 			dokumentLoeschen.setDisable(true);
@@ -105,6 +107,8 @@ public class KundenstammDialogController implements Initializable{
 
 	@FXML
 	void speichern(ActionEvent event) {
+		
+		// Abfrage des Formulars (Richtigkeit & Vollständigkeit)
 		if(vornameText.getText().isEmpty()) {
 			errorMsg.setText("Vorname eintragen.");
 			return;
@@ -130,14 +134,13 @@ public class KundenstammDialogController implements Initializable{
 			return;
 		}
 
-		Configuration config = new Configuration().configure().addAnnotatedClass(Kunde.class).addAnnotatedClass(Benutzer.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+		Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 
+		// Es wird abgefragt, ob ein/e Kund/Innen bereits übergeben worden ist
+		// Wenn man schon gespeichert hat und Fenster nicht verlassen hat, so werden
+		// die Kund/Innen berabeitet und keine neuen erstellt
 		if(kunde == null) {
 			Kunde kunde = new Kunde();
 			kunde.setKundeVorname(vornameText.getText());
@@ -220,14 +223,11 @@ public class KundenstammDialogController implements Initializable{
 		}
 	}
 
+	// Methode, um Table nach Veränderungen zu aktualisieren
 	public void listeBefuellen() {
 		list.clear();
 
-		Configuration config = new Configuration().configure().addAnnotatedClass(Kunde.class).addAnnotatedClass(Dokument.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+		Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 

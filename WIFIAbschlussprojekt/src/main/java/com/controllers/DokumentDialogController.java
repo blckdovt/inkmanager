@@ -50,13 +50,15 @@ public class DokumentDialogController {
     @FXML
     void browseDokumente(ActionEvent event) {
     	FileChooser fc = new FileChooser();
-    	File file = fc.showOpenDialog(LogIn.getStg());
+    	File file = fc.showOpenDialog(null);
     	
     	pfadText.setText(file.getPath().toString());
     }
     
     @FXML
     void speicherDokumente(ActionEvent event) {
+    	
+    	// Abfrage des Formulars (Richtigkeit & Vollständigkeit)
     	if(nameText.getText().isEmpty() && pfadText.getText().isEmpty()) {
     		errMsg.setText("Bitte Name und Dateipfad angeben.");
     		return;
@@ -70,11 +72,7 @@ public class DokumentDialogController {
     		return;
     	}
     	
-    	Configuration config = new Configuration().configure().addAnnotatedClass(Kunde.class).addAnnotatedClass(Dokument.class).addAnnotatedClass(Benutzer.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+    	Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 
@@ -90,6 +88,8 @@ public class DokumentDialogController {
 		txn.commit();
 		session.close();
     }
+    
+    // GETTERS & SETTERS ///////////////////////////////////////////////////////////////////
 
 	public Button getBrowseDokumente() {
 		return browseDokumente;

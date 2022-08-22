@@ -65,15 +65,12 @@ public class MotivlisteController implements Initializable{
 
 		listeBefuellen();
 	}
-
+	
+	// Methode, um Table nach Veränderungen zu aktualisieren
 	private void listeBefuellen() {
 		list.clear();
 
-		Configuration config = new Configuration().configure().addAnnotatedClass(Benutzer.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+		Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 
@@ -102,11 +99,7 @@ public class MotivlisteController implements Initializable{
 
 	@FXML
 	void motivLoeschen(ActionEvent event) {
-		Configuration config = new Configuration().configure().addAnnotatedClass(Motiv.class).addAnnotatedClass(Benutzer.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+		Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 
