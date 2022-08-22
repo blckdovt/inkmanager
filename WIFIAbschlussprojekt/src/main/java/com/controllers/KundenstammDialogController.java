@@ -205,11 +205,7 @@ public class KundenstammDialogController implements Initializable{
 
 	@FXML
 	void dokumentLoeschen(ActionEvent event) {
-		Configuration config = new Configuration().configure().addAnnotatedClass(Dokument.class);
-
-		SessionFactory sf = config.buildSessionFactory();
-
-		Session session = sf.openSession();
+		Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 
