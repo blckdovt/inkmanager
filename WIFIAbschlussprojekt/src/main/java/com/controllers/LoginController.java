@@ -43,17 +43,22 @@ public class LoginController {
 	
 	private static SessionFactory sf;
 	
-	// statischer Initialisierer um nur einmal die Configuration aufzurufen und die SessionFactory
+	// statischer Initialisierer: um nur einmal die Configuration aufzurufen und die SessionFactory
 	// zu bilden
 	static {
 		config = new Configuration().configure().addAnnotatedClass(Benutzer.class);
 		sf = config.buildSessionFactory();
 	}
 
+	// Abfrage des Formulars (Richtigkeit & Vollständigkeit)
+	// Danach User aus Datenbank abfragen
+	// Wenn kein Benutzer vorhanden ist (z.B. nach Neuinstallation), dann wird ein Admin erstellt
+	// Username: admin
+	// Passwort: admin
+	// Zum Schluss Passwortabfrage
 	@FXML
 	void userLogIn(ActionEvent event) throws IOException {
 
-		// Abfrage des Formulars (Richtigkeit & Vollständigkeit)
 		if(usernameTF.getText().isEmpty() && passwortTF.getText().isEmpty()) {
 			errorMsg.setText("Bitte LogIn-Daten eingeben.");
 			return;
@@ -69,8 +74,6 @@ public class LoginController {
 
 		LogIn login = new LogIn();
 
-		// Datenbank - User holen/abfragen
-
 		Session session = sf.openSession();
 
 		Transaction txn = session.beginTransaction();	
@@ -79,9 +82,6 @@ public class LoginController {
 
 		List<Benutzer> benutzerliste = query.list();
 		
-		// Wenn kein Benutzer vorhanden ist (z.B. nach Neuinstallation), dann wird ein Admin erstellt
-		// Username: admin
-		// Passwort: admin
 		if(benutzerliste.isEmpty()) {
 			Benutzer benutzer = new Benutzer();
 			benutzer.setAdmin(true);
@@ -93,12 +93,8 @@ public class LoginController {
 			session.save(benutzer);
 		}
 		
-		// alle Benutzer durchgehen
 		for(Benutzer b : benutzerliste) {
-
 			if(b.getUsername().equals(usernameTF.getText())) {
-
-				// Passwortabfrage -> wenn Username gefunden
 
 				if(passwortTF.getText().equals(b.getPasswort())) {
 					errorMsg.setText("Anmelden erfolgreich!");
@@ -119,20 +115,22 @@ public class LoginController {
 					return;
 				}
 			}
-
 		}
-
 		errorMsg.setText("Kein User mit diesem Username gefunden.");
 
 		txn.commit();
 		session.close();
-
 	}
 
+	// nur für Admin bestimmt
+	// Abfrage des Formulars (Richtigkeit & Vollständigkeit)
+	// Berechtigungsprüfung:
+		// User aus Datenbank holen und Adminrechte abfragen
+		// Zum Schluss Passwortabfrage
 	@FXML
 	void userverwaltung(ActionEvent event) throws IOException {
 		 
-		// Abfrage des Formulars (Richtigkeit & Vollständigkeit)
+		
 		if(usernameTF.getText().isEmpty() && passwortTF.getText().isEmpty()) {
 			errorMsg.setText("Bitte Admin LogIn-Daten eingeben.");
 			return;
@@ -148,8 +146,6 @@ public class LoginController {
 
 		LogIn login = new LogIn();
 
-		// Datenbank - User holen/abfragen
-
 		Session session = sf.openSession();
 
 		Transaction txn = session.beginTransaction();	
@@ -159,11 +155,7 @@ public class LoginController {
 		List<Benutzer> benutzer = query.list();
 
 		for(Benutzer b : benutzer) {
-
-			//hier wird zuzüglich Abgefragt ob Benutzer ein Adminrechte hat
 			if(b.isAdmin() && b.getUsername().equals(usernameTF.getText())) {
-
-				// Passwortabfrage -> wenn Username gefunden
 
 				if(passwortTF.getText().equals(b.getPasswort())) {
 					errorMsg.setText("Anmelden erfolgreich!");
@@ -183,15 +175,15 @@ public class LoginController {
 					return;
 				}
 			}
-
 		}
-
 		errorMsg.setText("Kein Admin mit diesem Username gefunden.");
 
 		txn.commit();
 		session.close();
 	}
 
+	// GETTERS & SETTERS //////////////////////////////////////////////////////////////////////////////////////
+	
 	public Label getErrorMsg() {
 		return errorMsg;
 	}

@@ -66,7 +66,7 @@ public class ArbeitsmittelVerwaltungController implements Initializable{
     
     private ObservableList<Arbeitsmittel> arbeitsmittelVerwaltungList;
     
-
+    // TableView aufbauen
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		arbeitsmittelVerwaltungList = FXCollections.observableArrayList();
 		
@@ -79,7 +79,8 @@ public class ArbeitsmittelVerwaltungController implements Initializable{
 		listeBefuellen();
 	}
 
-	// Methode, um Table nach Veränderungen zu aktualisieren
+	// Methode, um Table nach Veränderungen zu aktualisieren (Neubefüllung)
+	// holt Daten erneut aus DB
     private void listeBefuellen() {
     	arbeitsmittelVerwaltungList.clear();
 		
@@ -100,6 +101,7 @@ public class ArbeitsmittelVerwaltungController implements Initializable{
 		return;
 	}
 
+    // öffnet Fenster für das Hinzufügen eines Arbeitsmittels
     @FXML
     void hinzufuegenArbeitsmittel(ActionEvent event) throws IOException {
     	Parent root = FXMLLoader.load(getClass().getResource("../gui/arbeitsmittelVerwaltungDialog.fxml"));
@@ -114,6 +116,9 @@ public class ArbeitsmittelVerwaltungController implements Initializable{
 		stage.show();
     }
     
+    // öffnet Fenster für das Bearbeiten eines Arbeitsmittels
+    // Bevor Stage geladen wird, wird hier der Controller des FXMLs geladen, um die
+ 	// TextFields, etc. vorab auszufüllen
 	@FXML
     void bearbeitenArbeitsmittel(ActionEvent event) throws IOException {
 		FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("../gui/arbeitsmittelVerwaltungDialog.fxml"));
@@ -138,6 +143,7 @@ public class ArbeitsmittelVerwaltungController implements Initializable{
 		stage.show();
     }
 
+	// Arbeitsmittel werden aus dem Bestanad genommen und aus Datenbank entfernt
     @FXML
     void loeschenArbeitsmittel(ActionEvent event) {
     	Session session = LoginController.getSf().openSession();

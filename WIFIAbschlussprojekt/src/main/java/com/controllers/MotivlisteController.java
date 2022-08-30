@@ -56,7 +56,7 @@ public class MotivlisteController implements Initializable{
 
 	private ObservableList<Motiv> list;
 
-
+	// TableView füllen
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		list = FXCollections.observableArrayList();
 
@@ -66,7 +66,8 @@ public class MotivlisteController implements Initializable{
 		listeBefuellen();
 	}
 	
-	// Methode, um Table nach Veränderungen zu aktualisieren
+	// Methode, um Table nach Veränderungen zu aktualisieren (Neubefüllung)
+	// holt Daten erneut aus DB
 	private void listeBefuellen() {
 		list.clear();
 
@@ -83,6 +84,7 @@ public class MotivlisteController implements Initializable{
 		session.close();
 	}
 
+	// öffnet Fenster für das Hinzufügen eines Motivs
 	@FXML
 	void motivHinzufuegen(ActionEvent event) throws IOException {  	
 		Parent root = FXMLLoader.load(getClass().getResource("../gui/motiveDialog.fxml"));
@@ -97,6 +99,7 @@ public class MotivlisteController implements Initializable{
 		stage.show();
 	}
 
+	// Motiv wird aus Liste entfernt und aus Datenbank gelöscht
 	@FXML
 	void motivLoeschen(ActionEvent event) {
 		Session session = LoginController.getSf().openSession();

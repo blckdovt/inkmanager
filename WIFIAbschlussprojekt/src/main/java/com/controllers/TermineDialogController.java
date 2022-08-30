@@ -73,11 +73,10 @@ public class TermineDialogController implements Initializable{
 
 	ObservableList<String> list;
 
-
+	// Nur 2 Zahlen zulassen (Textfeld) für Eingabe für Stunden
+	// Nur 2 Zahlen zulassen (Textfeld) für Eingaben für Minuten
+	// AUßerdem wird Anzeige für ChoiceBox auf besser lesebaren String geändert
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
-		// Nur 2 Zahlen zulassen (Stunden)
-
 		uhrzeitStunden.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
@@ -91,8 +90,6 @@ public class TermineDialogController implements Initializable{
 			}
 
 		});
-
-		// Nur 2 Zahlen zulassen (Minuten)
 
 		uhrzeitMinuten.textProperty().addListener(new ChangeListener<String>() {
 			@Override
@@ -116,7 +113,6 @@ public class TermineDialogController implements Initializable{
 
 		List<String> kundennamen = FXCollections.observableArrayList();
 		
-		// Hier wird anzeige auf lesebaren String geändert
 		for(Kunde kunde: benutzer.getKundenliste()) {
 			String kundenname = "(" + kunde.getKundeId() + ") " + kunde.getKundeNachname() + ", " + kunde.getKundeVorname();
 			kundennamen.add(kundenname);
@@ -129,10 +125,13 @@ public class TermineDialogController implements Initializable{
 		session.close();
 	}
 
+	// Abfrage des Formulars (Richtigkeit & Vollständigkeit)
+	// Es wird abgefragt, ob ein Termin bereits übergeben worden ist
+	// Wenn man schon gespeichert hat und Fenster nicht verlassen hat, so wird
+	// der Termin berabeitet und kein neuer erstellt
 	@FXML
 	void speichern(ActionEvent event) {
-		
-		// Abfrage des Formulars (Richtigkeit & Vollständigkeit)
+			
 		if(terminDatum == null) {
 			errMsg.setText("Datum eintragen.");
 			return;
@@ -154,15 +153,11 @@ public class TermineDialogController implements Initializable{
 
 		Transaction txn = session.beginTransaction();
 
-		// Es wird abgefragt, ob ein Termin bereits übergeben worden ist
-		// Wenn man schon gespeichert hat und Fenster nicht verlassen hat, so wird
-		// der Termin berabeitet und kein neuer erstellt
 		if(termin == null) {
 			String uhrzeitString = uhrzeitStunden.getText() + ":" + uhrzeitMinuten.getText();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 			LocalTime uhrzeit = LocalTime.parse(uhrzeitString, formatter);
 			
-			// Hier wird mittels String die ID gesucht
 			StringBuilder kundeIdSB = new StringBuilder();
 			String kundenname = kundeAuswahl.getSelectionModel().getSelectedItem();
 			for(int i = 0; i < kundenname.length(); i++) {
@@ -200,8 +195,7 @@ public class TermineDialogController implements Initializable{
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 			LocalTime uhrzeit = LocalTime.parse(uhrzeitString, formatter);
 			termin.setUhrzeit(uhrzeit);
-			
-			// Hier wird mittels String die ID gesucht
+
 			StringBuilder kundeIdSB = new StringBuilder();
 			String kundenname = kundeAuswahl.getSelectionModel().getSelectedItem();
 			for(int i = 0; i < kundenname.length(); i++) {

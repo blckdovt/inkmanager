@@ -89,26 +89,50 @@ public class KundenstammDialogController implements Initializable{
 	private TextField vornameText;
 
 	private ObservableList<Dokument> list;
-
-
+	
+	// Table aufbauen
+	// Wenn Kunde noch nicht abgespeichert ist, dann kann kein Dokument hinzugefügt werden
+	// --> foreign Key noch nicht vorhanden ==> darum werden Buttons disabled
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		list = FXCollections.observableArrayList();
 
 		dokumenteCol.setCellValueFactory(new PropertyValueFactory<Dokument, String>("name"));
 		pfadCol.setCellValueFactory(new PropertyValueFactory<Dokument, String>("pfad"));
 
-		// Wenn Kunde noch nicht abgespeichert ist, dann kann kein Dokument hinzugefügt werden
-		// --> foreign Key noch nicht vorhanden ==> darum werden Buttons disabled
 		if(kunde == null) {
 			hinzufuegenButton.setDisable(true);
 			dokumentLoeschen.setDisable(true);
 		}
 	}
+	
+	// Methode, um Table nach Veränderungen zu aktualisieren (Neubefüllung)
+	// holt Daten erneut aus DB
+	public void listeBefuellen() {
+		list.clear();
 
+		Session session = LoginController.getSf().openSession();
+
+		Transaction txn = session.beginTransaction();
+
+		Kunde kundeDB = session.get(Kunde.class, kunde.getKundeId());
+
+		list = FXCollections.observableArrayList(kundeDB.getDokumentenliste());
+		dokumententabelle.setItems(list);
+		dokumententabelle.refresh();
+
+		txn.commit();
+		session.close();
+		return;
+	}
+
+	// Abfrage des Formulars (Richtigkeit & Vollständigkeit)
+	// Es wird abgefragt, ob ein/e Kund/Innen bereits übergeben worden ist
+	// Wenn man schon gespeichert hat und Fenster nicht verlassen hat, so werden
+	// die Kund/Innen berabeitet und keine neuen erstellt
 	@FXML
 	void speichern(ActionEvent event) {
 		
-		// Abfrage des Formulars (Richtigkeit & Vollständigkeit)
+		
 		if(vornameText.getText().isEmpty()) {
 			errorMsg.setText("Vorname eintragen.");
 			return;
@@ -138,9 +162,6 @@ public class KundenstammDialogController implements Initializable{
 
 		Transaction txn = session.beginTransaction();
 
-		// Es wird abgefragt, ob ein/e Kund/Innen bereits übergeben worden ist
-		// Wenn man schon gespeichert hat und Fenster nicht verlassen hat, so werden
-		// die Kund/Innen berabeitet und keine neuen erstellt
 		if(kunde == null) {
 			Kunde kunde = new Kunde();
 			kunde.setKundeVorname(vornameText.getText());
@@ -178,12 +199,8 @@ public class KundenstammDialogController implements Initializable{
 			return;
 		}
 	}
-
-	@FXML
-	void geburtstagEintragen(ActionEvent event) {
-		geb = gebDatumAuswahl.getValue();
-	}
-
+	
+	// öffnet Fenster für das Hinzufügen eines Dokuments
 	@FXML
 	void dokumentHinzufuegen(ActionEvent event) throws IOException {	
 		FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("../gui/dokumentDialog.fxml"));
@@ -203,6 +220,7 @@ public class KundenstammDialogController implements Initializable{
 		stage.show();
 	}
 
+	// Dokument wird aus der Datenbank entfernt
 	@FXML
 	void dokumentLoeschen(ActionEvent event) {
 		Session session = LoginController.getSf().openSession();
@@ -218,24 +236,10 @@ public class KundenstammDialogController implements Initializable{
 			listeBefuellen();
 		}
 	}
-
-	// Methode, um Table nach Veränderungen zu aktualisieren
-	public void listeBefuellen() {
-		list.clear();
-
-		Session session = LoginController.getSf().openSession();
-
-		Transaction txn = session.beginTransaction();
-
-		Kunde kundeDB = session.get(Kunde.class, kunde.getKundeId());
-
-		list = FXCollections.observableArrayList(kundeDB.getDokumentenliste());
-		dokumententabelle.setItems(list);
-		dokumententabelle.refresh();
-
-		txn.commit();
-		session.close();
-		return;
+	
+	@FXML
+	void geburtstagEintragen(ActionEvent event) {
+		geb = gebDatumAuswahl.getValue();
 	}
 
 	// GETTERS & SETTERS //////////////////////////////////////////////////

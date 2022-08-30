@@ -90,7 +90,7 @@ public class TermineController implements Initializable{
 	
 	ObservableList<Termin> list = FXCollections.observableArrayList();
 	
-
+	// TableView befüllen
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		datumCol.setCellValueFactory(new PropertyValueFactory<Termin, LocalDate>("datum"));
@@ -102,6 +102,8 @@ public class TermineController implements Initializable{
 		listeBefuellen();
 	}
 	
+	// Methode, um Table nach Veränderungen zu aktualisieren (Neubefüllung)
+	// holt Daten erneut aus DB
 	public void listeBefuellen() {
 		list.clear();
 
@@ -132,6 +134,9 @@ public class TermineController implements Initializable{
 		return;
 	}
 
+	// öffnet Fenster für das Bearbeiten eines Termins
+    // Bevor Stage geladen wird, wird hier der Controller des FXMLs geladen, um die
+ 	// TextFields, etc. vorab auszufüllen
 	@FXML
 	void terminBearbeiten(ActionEvent event) throws IOException {
 		FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("../gui/termineDialog.fxml"));
@@ -141,8 +146,6 @@ public class TermineController implements Initializable{
 		Stage stage = new Stage();
 		Scene scene = new Scene(root);
 		
-		// Bevor Stage geladen wird, wird hier der Controller des FXMLs geladen, um die
-		// TextFields, etc. vorab auszufüllen
 		TermineDialogController terminecontroller = fxmlloader.getController();
 		terminecontroller.setTermin(termintabelle.getSelectionModel().getSelectedItem());
 		terminecontroller.getDatum().setValue(termintabelle.getSelectionModel().getSelectedItem().getDatum());
@@ -154,8 +157,7 @@ public class TermineController implements Initializable{
 		
 		String kundenname = "(" + termintabelle.getSelectionModel().getSelectedItem().getKundeId() + ") " + termintabelle.getSelectionModel().getSelectedItem().getKundeNachname() + ", " + termintabelle.getSelectionModel().getSelectedItem().getKundeVorname();
 		terminecontroller.getKundeAuswahl().setValue(kundenname);
-		
-		// erst dann wird Stage geladen
+
 		stage.setScene(scene);
 		stage.setTitle("InkManager");
 		stage.setResizable(false);
@@ -163,6 +165,7 @@ public class TermineController implements Initializable{
 		stage.show();
 	}
 
+	// öffnet Fenster für das Hinzufügen eines Termins
 	@FXML
 	void terminHinzufügen(ActionEvent event) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("../gui/termineDialog.fxml"));
@@ -177,6 +180,7 @@ public class TermineController implements Initializable{
 		stage.show();
 	}
 
+	// Löscht Termin aus Liste und wird aus der Datenbank gelöscht
 	@FXML
 	void terminLoeschen(ActionEvent event) {
 		Session session = LoginController.getSf().openSession();
@@ -200,7 +204,7 @@ public class TermineController implements Initializable{
 		listeBefuellen();
 	}
 
-	// Menü-Buttons /////////////////////////////////////////////////////////////////////////
+	// MENÜ BUTTONS /////////////////////////////////////////////////////////////////////////
 
 	@FXML
 	void goToKundenstamm(ActionEvent event) throws IOException{

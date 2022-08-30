@@ -37,16 +37,17 @@ public class MotiveDialogController {
     
     @FXML
     private Label errMsg;
-
+    
+    // Motiv kann mittels FileChooser hinzugefügt werden
+    // Festlegen, dass nur gewisse Dateien (Bilder) ausgewählt werden
+    // Falls falsches File ausgewählt wurde wird Error ausgegeben
     @FXML
     void browseMotive(ActionEvent event) {
     	FileChooser fc = new FileChooser();
     	
-    	// festlegen, dass nur gewisse Dateien (Bilder) ausgewählt werden
     	fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image files ", "*.png ", "*.jpg", "*.jpeg", "*.gif"));
     	File file = fc.showOpenDialog(null);
     	
-    	// falls falsches File ausgewählt wurde wird error ausgegeben
     	if(file != null) {
     		pfadText.setText(file.getPath().toString());
 		}
@@ -55,10 +56,11 @@ public class MotiveDialogController {
     	}
     }
     
+    // Abfrage des Formulars (Richtigkeit & Vollständigkeit)
+    // Neues Motiv wird erstellt und in Datenbank gespeichert
     @FXML
     void speicherMotiv(ActionEvent event) {
     	
-    	// Abfrage des Formulars (Richtigkeit & Vollständigkeit)
     	if(nameText.getText().isEmpty() && pfadText.getText().isEmpty()) {
     		errMsg.setText("Bitte Name und Dateipfad angeben.");
     		return;

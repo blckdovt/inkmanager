@@ -84,6 +84,7 @@ public class KundenstammController implements Initializable{
 
 	private ObservableList<Kunde> list = FXCollections.observableArrayList();
 
+	// TableView aufbauen
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		idCol.setCellValueFactory(new PropertyValueFactory<Kunde, Integer>("kundeId"));
@@ -94,7 +95,8 @@ public class KundenstammController implements Initializable{
 		listeBefuellen();
 	}
 
-	// Methode, um Table nach Veränderungen zu aktualisieren
+	// Methode, um Table nach Veränderungen zu aktualisieren (Neubefüllung)
+	// holt Daten erneut aus DB
 	public void listeBefuellen() {
 		list.clear();
 		
@@ -112,6 +114,7 @@ public class KundenstammController implements Initializable{
 		return;
 	}
 
+	// öffnet Fenster für das Hinzufügen für Kunden
 	@FXML
 	void kundeHinzufuegen(ActionEvent event) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("../gui/kundenstammDialog.fxml"));
@@ -126,6 +129,11 @@ public class KundenstammController implements Initializable{
 		stage.show();
 	}
 
+	// öffnet Fenster für das Bearbeiten eines Kunden
+	// Bevor Stage geladen wird, wird hier der Controller des FXMLs geladen, um die
+	// TextFields, etc. vorab auszufüllen
+	// Außerdem werden die Dokumente, die zu einem Kunden geschlüsselt wurden, geladen und die Liste
+	// im DialogController befüllt
 	@FXML
 	void kundeBearbeiten(ActionEvent event) throws IOException {
 		FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("../gui/kundenstammDialog.fxml"));
@@ -135,8 +143,7 @@ public class KundenstammController implements Initializable{
 		Stage stage = new Stage();
 		Scene scene = new Scene(root);
 
-		// Bevor Stage geladen wird, wird hier der Controller des FXMLs geladen, um die
-		// TextFields, etc. vorab auszufüllen
+		
 		KundenstammDialogController kundenstammcontroller = fxmlloader.getController();
 		kundenstammcontroller.setKunde(kundentabelle.getSelectionModel().getSelectedItem());
 
@@ -148,8 +155,6 @@ public class KundenstammController implements Initializable{
 		kundenstammcontroller.getDokumentLoeschen().setDisable(false);
 		kundenstammcontroller.getHinzufuegenButton().setDisable(false);
 
-		// Hier werden die Dokumente, die zu einem Kunden geschlüsselt wurden, geladen und die Liste
-		// im DialogController befüllt
 		Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
@@ -161,8 +166,7 @@ public class KundenstammController implements Initializable{
 
 		txn.commit();
 		session.close();
-		
-		// erst dann wird Stage geladen
+
 		stage.setScene(scene);
 		stage.setTitle("InkManager");
 		stage.setResizable(false);
@@ -170,6 +174,7 @@ public class KundenstammController implements Initializable{
 		stage.show();
 	}
 
+	// Kunden werden aus dem Kundenstamm genommen und aus Datenbank entfernt
 	@FXML
 	void loescheKunde(ActionEvent event) {		
 		Session session = LoginController.getSf().openSession();
@@ -191,7 +196,7 @@ public class KundenstammController implements Initializable{
 		listeBefuellen();
 	}
 
-	// Menü-Buttons /////////////////////////////////////////////////////////////////////////
+	// MENÜ BUTTONS /////////////////////////////////////////////////////////////////////////
 
 	@FXML
 	void goToArbeitsmittel(ActionEvent event) throws IOException{

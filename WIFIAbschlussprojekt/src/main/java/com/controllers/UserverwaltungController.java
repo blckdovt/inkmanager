@@ -48,17 +48,17 @@ public class UserverwaltungController {
 
 	@FXML
 	private Label errorLabel;
-
+	
+	// Zurück zur LogIn Screen gehen
 	@FXML
 	void abbrechen(ActionEvent event) throws IOException {
 		LogIn login = new LogIn();
 		login.changeScene("login.fxml");
 	}
 
+	// User wird aus Datenbank gelöscht
 	@FXML
 	void userLoeschen(ActionEvent event) {
-		// Datenbank - User holen/abfragen
-
 		Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();	
@@ -67,11 +67,8 @@ public class UserverwaltungController {
 
 		List<Benutzer> benutzer = query.list();
 
-		// Benutzer Liste durchgehen und Username abfragen
-
 		for(Benutzer b : benutzer) {
 			if(b.getUsername().equals(usernameTF.getText())) {
-				// wenn Username vorhanden dann löschen
 				session.delete(b);
 				break;
 			}
@@ -80,11 +77,11 @@ public class UserverwaltungController {
 		session.close();
 	}
 
+	// Richtigkeit des Formulares überprüfen
+	// Wenn User vorhanden -> Update
+	// sonst neuen User anlegen und speichern
 	@FXML
 	void userSpeichern(ActionEvent event) {
-
-		// Richtigkeit des Formulares überprüfen
-
 		if(usernameTF.getText().isEmpty() && passwordfield.getText().isEmpty() && passwordfield1.getText().isEmpty()) {
 			errorLabel.setText("Bitte Userdaten vergeben.");
 			return;
@@ -111,9 +108,6 @@ public class UserverwaltungController {
 		List<Benutzer> benutzer = query.list();
 
 		for(Benutzer b : benutzer) {
-
-			// Wenn User vorhanden -> Update
-
 			if(b.getUsername().equals(usernameTF.getText()) && passwordfield.getText().equals(passwordfield1.getText())) {
 				b.setUsername(usernameTF.getText());
 				b.setPasswort(passwordfield.getText());
@@ -135,8 +129,6 @@ public class UserverwaltungController {
 			}
 
 		}
-
-		// sonst neuen User anlegen und speichern
 
 		if (passwordfield.getText().equals(passwordfield1.getText())){
 			Benutzer user = new Benutzer();

@@ -53,10 +53,14 @@ public class ArbeitsmittelVerwaltungDialogController {
 	@FXML
 	private Button speicherArbeitsmittel;
 
+	// Abfrage des Formulars (Richtigkeit & Vollständigkeit)
+	// Es wird abgefragt, ob ein Arbeitsmittel bereits übergeben worden ist
+	// Wenn man schon gespeichert hat und Fenster nicht verlassen hat, so wird
+	// das Arbeitsmittel berabeitet und kein neues erstellt
 	@FXML
 	void speichern(ActionEvent event) {
 		
-		// Abfrage des Formulars (Richtigkeit & Vollständigkeit)
+		
 		if(chargeNumberText.getText().isEmpty()) {
 			errMsg.setText("Charge Number eintragen.");
 			return;
@@ -78,9 +82,6 @@ public class ArbeitsmittelVerwaltungDialogController {
 
 		Transaction txn = session.beginTransaction();
 
-		// Es wird abgefragt, ob ein Arbeitsmittel bereits übergeben worden ist
-		// Wenn man schon gespeichert hat und Fenster nicht verlassen hat, so wird
-		// das Arbeitsmittel berabeitet und kein neues erstellt
 		if(arbeitsmittel == null) {
 			Arbeitsmittel abm = new Arbeitsmittel();
 			abm.setChargeNumber(chargeNumberText.getText());

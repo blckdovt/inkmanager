@@ -36,6 +36,8 @@ public class MainController {
     @FXML
     private VBox vbButtons;
 
+    // MENÜ BUTTONS //////////////////////////////////////////////////////////////////////////////////////////////
+    
     @FXML
     void goToKundenstamm(ActionEvent event) throws IOException{
     	LogIn login = new LogIn();

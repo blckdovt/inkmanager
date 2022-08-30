@@ -89,14 +89,14 @@ public class ArbeitsmittelController implements Initializable{
 	private ObservableList<Arbeitsmittel> arbeitsmittelList;
     
 	
+	// Abfrage ob User ein Admin ist und Berechtigung zum Ändern des Lagerbestandes hat
+	// TableView aufbauen
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		// Abfrage ob User ein Admin ist und Berechtigung zum ändern der allgemeinen Warenliste hat
 		if(!LoginController.angemeldeterBenutzer.isAdmin()) {
 			verwaltungButton.setDisable(true);
 		}
 		
-		// TableView aufbauen
 		arbeitsmittelList = FXCollections.observableArrayList();
 		
     	idCol.setCellValueFactory(new PropertyValueFactory<Arbeitsmittel, Integer>("arbeitsmittelId"));
@@ -108,7 +108,8 @@ public class ArbeitsmittelController implements Initializable{
 		listeBefuellen();
 	}
     
-	// Methode, um Table nach Veränderungen zu aktualisieren
+	// Methode, um Table nach Veränderungen zu aktualisieren (Neubefüllung)
+	// holt Daten erneut aus DB
     public void listeBefuellen(){
     	arbeitsmittelList.clear();
 		
@@ -128,6 +129,8 @@ public class ArbeitsmittelController implements Initializable{
 		return;
     }
     
+    // Mitarbeiter/Admin kann Arbeitsmittel für sich reservieren
+    // Arbeitsmittel bekommt foreign Key von Benutzer (Arbeitsmittel kommt auf Benutzers Warenliste)
     @FXML
     void arbeitsmittelReservieren(ActionEvent event) {
     	Session session = LoginController.getSf().openSession();
@@ -145,6 +148,7 @@ public class ArbeitsmittelController implements Initializable{
 		listeBefuellen();
     }
 
+    // Nur für Admin bestimmt - öffnet Fenster für Verwaltung des Warenbestandes
     @FXML
     void arbeitsmittelVerwalten(ActionEvent event) throws IOException {
     	Parent root = FXMLLoader.load(getClass().getResource("../gui/arbeitsmittelVerwaltung.fxml"));
@@ -159,6 +163,7 @@ public class ArbeitsmittelController implements Initializable{
 		stage.show();
     }
 
+    // öffnet Fenster für Verwaltung der Warenliste (reservierte Waren der Benutzer)
     @FXML
     void warenlisteAnzeigen(ActionEvent event) throws IOException {
     	Parent root = FXMLLoader.load(getClass().getResource("../gui/warenliste.fxml"));
@@ -174,7 +179,7 @@ public class ArbeitsmittelController implements Initializable{
     }
     
     
-    // Menü-Buttons /////////////////////////////////////////////////////////////////////////
+    // NEMÜ BUTTONS /////////////////////////////////////////////////////////////////////////
     
     @FXML
     void goToKundenstamm(ActionEvent event) throws IOException{

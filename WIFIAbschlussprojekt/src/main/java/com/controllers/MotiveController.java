@@ -104,7 +104,7 @@ public class MotiveController implements Initializable{
 		bildLaden();
 	}
 
-	// Bilder für Anzeige laden
+	// Bilder aus Datenbank holen und in Liste für Anzeige laden
 	public void bilderlisteLaden() {
 		motiveAL.clear();
 		
@@ -124,6 +124,7 @@ public class MotiveController implements Initializable{
 		session.close();
 	}
 
+	// Kunden des Benutzers aus Datenbank holen und in ChoiceBox laden
 	public void choiceBoxLaden() {
 		kundenAuswahl.setValue(null);
 
@@ -182,6 +183,7 @@ public class MotiveController implements Initializable{
 		}
 	}
 	
+	// ein Bild nach links gehen
 	@FXML
 	void goLeft(ActionEvent event) {
 		index--;
@@ -189,6 +191,7 @@ public class MotiveController implements Initializable{
 		bildLaden();
 	}
 
+	// ein Bild nach rechts gehen
 	@FXML
 	void goRight(ActionEvent event) {
 		index++;
@@ -206,6 +209,7 @@ public class MotiveController implements Initializable{
 		}
 	}
 
+	// öffnet Fenster um zu Liste der Motive von Benutzer zu kommen
 	@FXML
 	void motivlisteAnzeigen(ActionEvent event) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("../gui/motivliste.fxml"));
@@ -224,14 +228,15 @@ public class MotiveController implements Initializable{
 		stage.show();
 	}
 
+	// Zum Motiv wird der ForeignKey des Kunden gespeichert
+	// Hier muss mittels des Strings die Kunden-ID gefunden werden, um den Kunden zu laden
 	@FXML
 	void kundeSpeichern(ActionEvent event) {
 		Session session = LoginController.getSf().openSession();
 		session.clear();
 
 		Transaction txn = session.beginTransaction();
-		
-		// Hier muss mittels des Strings die ID gefunden werden, um den Kunden zu laden
+
 		StringBuilder kundeIdSB = new StringBuilder();
 		String kundenname = kundenAuswahl.getSelectionModel().getSelectedItem();
 		for(int i = 0; i < kundenname.length(); i++) {
@@ -254,13 +259,14 @@ public class MotiveController implements Initializable{
 		kundenAuswahl.setDisable(true);
 	}
 
+	// Foreign-Key des Kunden wird von Motiv entfernt
+	// Hier muss mittels des Strings die Kunden-ID gefunden werden, um den Kunden zu laden
 	@FXML
 	void kundeLoeschen(ActionEvent event) {
 		Session session = LoginController.getSf().openSession();
 
 		Transaction txn = session.beginTransaction();
 		
-		// Hier muss mittels des Strings die ID gefunden werden, um den Kunden zu laden
 		StringBuilder kundeIdSB = new StringBuilder();
 		String kundenname = kundenAuswahl.getSelectionModel().getSelectedItem();
 		for(int i = 0; i < kundenname.length(); i++) {

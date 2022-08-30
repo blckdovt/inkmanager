@@ -57,6 +57,7 @@ public class WarenlisteController implements Initializable{
 
 	private ObservableList<Arbeitsmittel> warenlisteList;
 
+	// TableView befüllen
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		warenlisteList = FXCollections.observableArrayList();
@@ -70,6 +71,8 @@ public class WarenlisteController implements Initializable{
 		listeBefuellen();
 	}
 
+	// Methode, um Table nach Veränderungen zu aktualisieren (Neubefüllung)
+	// holt Daten erneut aus DB
 	public void listeBefuellen() {
 		warenlisteList.clear();
 
@@ -89,6 +92,8 @@ public class WarenlisteController implements Initializable{
 		session.close();
 	}
 
+	// Um Arbeitsmittel aus Warenliste zu nehmen und zurück in Lagerbestand geben
+	// ForeignKey des Benutzers wird entfernt
 	@FXML
 	void stornieren(ActionEvent event) {
 		Session session = LoginController.getSf().openSession();

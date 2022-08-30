@@ -46,7 +46,7 @@ public class DokumentDialogController {
     
     private Kunde kunde;
 
-    
+    // Dokument kann mittels FileChooser ausgewählt werden, was des Pfadtextfeld automatisch befüllt
     @FXML
     void browseDokumente(ActionEvent event) {
     	FileChooser fc = new FileChooser();
@@ -55,6 +55,7 @@ public class DokumentDialogController {
     	pfadText.setText(file.getPath().toString());
     }
     
+    // Dokument wird endgültig Erzeugt und in der Datenbank abgespeichert
     @FXML
     void speicherDokumente(ActionEvent event) {
     	
