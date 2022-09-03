@@ -36,10 +36,6 @@ public class Termin {
 	@JoinColumn(name="kundeId", referencedColumnName="kundeId")
 	private Kunde kunde;
 	
-	public Termin(Kunde kunde) {
-		this.kunde = kunde;
-	}
-	
 	public int getTerminId() {
 		return terminId;
 	}

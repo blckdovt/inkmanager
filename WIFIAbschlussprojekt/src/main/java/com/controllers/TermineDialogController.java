@@ -169,7 +169,7 @@ public class TermineDialogController implements Initializable{
 
 			Benutzer benutzer = session.get(Benutzer.class, LoginController.angemeldeterBenutzer.getBenutzerId());
 
-			Termin termin = new Termin(kunde);
+			Termin termin = new Termin();
 			termin.setDatum(terminDatum);
 			termin.setUhrzeit(uhrzeit);
 			termin.setKunde(kunde);
