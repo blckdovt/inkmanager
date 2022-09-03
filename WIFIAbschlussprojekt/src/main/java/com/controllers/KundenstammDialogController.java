@@ -173,7 +173,7 @@ public class KundenstammDialogController implements Initializable{
 			dokumentLoeschen.setDisable(false);
 
 			Benutzer benutzer = session.get(Benutzer.class, LoginController.angemeldeterBenutzer.getBenutzerId());
-			benutzer.kundeHinzufuegen(kunde);
+			benutzer.getKundenliste().add(kunde);
 
 			session.save(kunde);
 

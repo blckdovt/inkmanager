@@ -72,7 +72,7 @@ public class TermineDialogController implements Initializable{
 	private Label errMsg;
 
 	ObservableList<String> list;
-
+	
 	// Nur 2 Zahlen zulassen (Textfeld) für Eingabe für Stunden
 	// Nur 2 Zahlen zulassen (Textfeld) für Eingaben für Minuten
 	// AUßerdem wird Anzeige für ChoiceBox auf besser lesebaren String geändert
@@ -88,7 +88,6 @@ public class TermineDialogController implements Initializable{
 					uhrzeitStunden.setText(s);
 				}
 			}
-
 		});
 
 		uhrzeitMinuten.textProperty().addListener(new ChangeListener<String>() {
@@ -102,7 +101,6 @@ public class TermineDialogController implements Initializable{
 					uhrzeitMinuten.setText(s);
 				}
 			}
-
 		});
 
 		Session session = LoginController.getSf().openSession();
@@ -305,31 +303,25 @@ public class TermineDialogController implements Initializable{
 		this.terminDatum = terminDatum;
 	}
 
-
 	public TextField getUhrzeitStunden() {
 		return uhrzeitStunden;
 	}
-
 
 	public void setUhrzeitStunden(TextField uhrzeitStunden) {
 		this.uhrzeitStunden = uhrzeitStunden;
 	}
 
-
 	public TextField getUhrzeitMinuten() {
 		return uhrzeitMinuten;
 	}
-
 
 	public void setUhrzeitMinuten(TextField uhrzeitMinuten) {
 		this.uhrzeitMinuten = uhrzeitMinuten;
 	}
 
-
 	public Label getDoppelpunkt() {
 		return doppelpunkt;
 	}
-
 
 	public void setDoppelpunkt(Label doppelpunkt) {
 		this.doppelpunkt = doppelpunkt;

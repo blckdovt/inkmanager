@@ -51,16 +51,6 @@ public class Benutzer {
 	@JoinColumn(name="benutzerId", referencedColumnName="benutzerId")
 	private List<Motiv> motivliste = new ArrayList<>();
 	
-	public void kundeHinzufuegen(Kunde kunde) {
-		kundenliste.add(kunde);
-		kunde.benutzerHinzufuegen(this);
-	}
-	
-	public void kundeLoeschen(Kunde kunde) {
-		kundenliste.remove(kunde);
-		kunde.benutzerLoeschen(this);
-	}
-	
 	public String getUsername() {
 		return username;
 	}

@@ -25,8 +25,6 @@ public class Termin {
 	private LocalDate datum;
 	@Column(name="Uhrzeit")
 	private LocalTime uhrzeit;
-	@Column(name="Info")
-	private String info;
 	@Transient
 	private int kundeId;
 	@Transient
@@ -37,11 +35,6 @@ public class Termin {
 	@ManyToOne
 	@JoinColumn(name="kundeId", referencedColumnName="kundeId")
 	private Kunde kunde;
-	
-	
-	public Termin() {
-		
-	}
 	
 	public Termin(Kunde kunde) {
 		this.kunde = kunde;
@@ -69,14 +62,6 @@ public class Termin {
 	
 	public void setUhrzeit(LocalTime uhrzeit) {
 		this.uhrzeit = uhrzeit;
-	}
-	
-	public String getInfo() {
-		return info;
-	}
-	
-	public void setInfo(String info) {
-		this.info = info;
 	}
 
 	public Kunde getKunde() {
